@@ -1,7 +1,8 @@
 import { useDispatch } from 'react-redux';
 import { FaUser, FaPhoneAlt } from 'react-icons/fa';
+import clsx from 'clsx';
 
-import { deleteContact } from '../redux/contactsSlice';
+import { deleteContact } from '../redux/contactsOps';
 
 import classes from './Contact.module.css';
 import { useCallback } from 'react';
@@ -9,22 +10,28 @@ import { useCallback } from 'react';
 function Contact({ contact }) {
   const dispatch = useDispatch();
 
-  const handleContactDelete = useCallback(
-    ({ id }) => {
-      dispatch(deleteContact(id));
-    },
-    [dispatch],
-  );
+  const handleContactDelete = useCallback(() => {
+    dispatch(deleteContact(contact));
+  }, [contact, dispatch]);
 
   return (
-    <div className={classes['contact']}>
+    <div
+      className={clsx(classes['contact'], {
+        [classes['optimistic']]: contact.id === null,
+      })}
+    >
       <div className={classes['contact-info']}>
         <FaUser />
         <span className={classes['contact-name']}>{contact.name}</span>
         <FaPhoneAlt />
         <span className={classes['contact-number']}>{contact.number}</span>
       </div>
-      <button onClick={handleContactDelete} className={classes['delete-button']} type="button">
+      <button
+        disabled={contact.id === null}
+        onClick={handleContactDelete}
+        className={classes['delete-button']}
+        type="button"
+      >
         Delete
       </button>
     </div>

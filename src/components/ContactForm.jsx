@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 
-import { addContact } from '../redux/contactsSlice';
+import { addContact } from '../redux/contactsOps';
 
 import classes from './ContactForm.module.css';
 
@@ -11,13 +11,13 @@ const initialValues = {
   name: '',
   number: '',
 };
-const phoneRegExp = /^\d{3}-\d{2}-\d{2}$/;
+const phoneRegExp = /^\d{3}-\d{3}-\d{4}$/;
 
 const ContactSchema = Yup.object().shape({
   name: Yup.string().required('Name is required').min(2, 'Too short name').max(50, 'Too long name'),
   number: Yup.string()
     .required('Number is required')
-    .matches(phoneRegExp, 'Phone number is not valid, use format 777-77-77'),
+    .matches(phoneRegExp, 'Phone number is not valid, use format 777-777-7777'),
 });
 
 function ContactForm() {
@@ -27,7 +27,7 @@ function ContactForm() {
 
   const handleFormSubmit = useCallback(
     ({ name, number }) => {
-      dispatch(addContact(name, number));
+      dispatch(addContact({ name, number }));
     },
     [dispatch],
   );
