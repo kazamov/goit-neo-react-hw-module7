@@ -1,4 +1,4 @@
-import { useId, useCallback } from 'react';
+import { useId } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import { selectNameFilter, changeFilter } from '../redux/filtersSlice';
@@ -10,12 +10,9 @@ function SearchBox() {
   const value = useSelector(selectNameFilter);
   const dispatch = useDispatch();
 
-  const handleFilterChange = useCallback(
-    newFilterValue => {
-      dispatch(changeFilter(newFilterValue));
-    },
-    [dispatch],
-  );
+  const handleFilterChange = newFilterValue => {
+    dispatch(changeFilter(newFilterValue));
+  };
 
   return (
     <div className={classes['search-box-container']}>

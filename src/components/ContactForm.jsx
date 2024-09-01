@@ -1,4 +1,4 @@
-import { useCallback, useId } from 'react';
+import { useId } from 'react';
 import { useDispatch } from 'react-redux';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
@@ -25,12 +25,9 @@ function ContactForm() {
   const numberId = useId();
   const dispatch = useDispatch();
 
-  const handleFormSubmit = useCallback(
-    ({ name, number }) => {
-      dispatch(addContact({ name, number }));
-    },
-    [dispatch],
-  );
+  const handleFormSubmit = ({ name, number }) => {
+    dispatch(addContact({ name, number }));
+  };
 
   return (
     <Formik

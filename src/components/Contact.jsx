@@ -5,14 +5,13 @@ import clsx from 'clsx';
 import { deleteContact } from '../redux/contactsOps';
 
 import classes from './Contact.module.css';
-import { useCallback } from 'react';
 
 function Contact({ contact }) {
   const dispatch = useDispatch();
 
-  const handleContactDelete = useCallback(() => {
+  const handleContactDelete = () => {
     dispatch(deleteContact(contact));
-  }, [contact, dispatch]);
+  };
 
   return (
     <div
